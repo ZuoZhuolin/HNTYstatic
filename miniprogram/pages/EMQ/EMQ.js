@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    index: [],
   },
 
   /**
@@ -106,15 +106,21 @@ Page({
     Stomp.setInterval = function () { }
     Stomp.clearInterval = function () { }
     var stompClient = Stomp.over(ws);
-
+    var that = this;
     stompClient.connect({}, function (sessionId) {
-      stompClient.subscribe('/measure/QB91G3S01000396', function (res) {
+      stompClient.subscribe('/measure/QB91G201809003', function (res) {
+        console.log(res);
         var state = JSON.parse(res.body);
-        console.log('From MQ:', state);
-        console.log(state.deviceId)
-        var measures = state.measures
+        var measures = state.measures;        
         for(var i = 0; i < measures.length; i++){
-          console.log(measures[i])
+          var info = measures[i].label + ": " + measures[i].value + measures[i].unit + " " + measures[i].key + "\n"
+          var track = 'index['+i+']'
+          console.log(info)
+          if (measures[i].key.substr(0, 1) != "V" && measures[i].key.substr(0,1) != " ") {
+            that.setData({
+              [track]: info,
+            })
+          }
         }  
       });
     })

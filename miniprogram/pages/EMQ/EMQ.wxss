@@ -1,1 +1,15 @@
 /* pages/EMQ/EMQ.wxss */
+.static{
+  display:flex;
+  flex-direction: column;
+  margin-left: 100rpx;
+  margin-top: 100rpx;
+  
+}
+.connectButton{
+  position: fixed;
+  
+  bottom: 0;
+
+  width: 100%;
+}

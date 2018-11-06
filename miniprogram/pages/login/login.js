@@ -1,4 +1,4 @@
-// pages/deployFunctions/deployFunctions.js
+// pages/login/login.js
 Page({
 
   /**
@@ -62,5 +62,9 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  login:function(){
+    
   }
 })

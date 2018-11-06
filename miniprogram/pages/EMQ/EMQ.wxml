@@ -1,4 +1,11 @@
 <!--pages/EMQ/EMQ.wxml-->
-<button bindtap='initSocket'>连接</button>
-<button bindtap='sendMessage'>发送</button>
-<button bindtap='closeLink'>断开</button>
+<view class = "static">
+  <view wx:for = "{{index}}" >
+    {{item}}
+  </view>
+</view>
+
+<view class = "connectButton">
+  <button bindtap='initSocket'>连接</button>
+  <button bindtap='closeLink'>断开</button>
+</view>
