@@ -1,0 +1,5 @@
+<!--pages/instruID/instruID.wxml-->
+<view wx:for="{{arr}}" bindtap='chooseInstru' id="{{index}}" wx:key="*this" >
+    <button>{{item}}</button>
+</view>
+<button bindtap='scanId'>扫码查看现场仪器</button>

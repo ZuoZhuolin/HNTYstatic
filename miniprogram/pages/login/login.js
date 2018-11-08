@@ -1,18 +1,40 @@
 // pages/login/login.js
+var app = getApp();  
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    username:null,
+    password:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    wx.getStorage({
+      key: 'username',
+      success: function(res) {
+        console.log(res)       
+        that.setData({
+          idValue : res.data,
+          username: res.data
+        })        
+      },
+    })
+    wx.getStorage({
+      key: 'password',
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          pwdValue: res.data,
+          password: res.data
+        })
+      },
+    })
   },
 
   /**
@@ -63,8 +85,46 @@ Page({
   onShareAppMessage: function () {
 
   },
-
+  
+  idInput: function (e) {
+    this.setData({
+      username: e.detail.value
+    })
+  },
+  pwdInput: function (e) {
+    this.setData({
+      password: e.detail.value
+    })
+  },
   login:function(){
-    
+    var that = this
+    wx.request({
+      url: 'http://47.92.33.38:8080/hnty/cloud/app/android/login?username='+ this.data.username + '&password='+ this.data.password + '&mac=C4%3A07%3A2F%3A52%3A3F%3A7A',
+      method: 'GET',
+      success: function (res) {
+        if (res.data.success) {
+          console.log(res.data.deviceList)          
+          wx.setStorage({
+            key: 'username',
+            data: that.data.username,
+          })
+          wx.setStorage({
+            key: 'password',
+            data: that.data.password,
+          })
+          app.globalData.deviceList = res.data.deviceList
+          wx.redirectTo({
+            url: '../instruID/instruID',
+          })
+        } else {        
+          console.log(that.data.username)
+          wx.showToast({
+            title: '账户或密码错误',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
+    })
   }
 })

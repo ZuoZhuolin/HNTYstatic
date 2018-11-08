@@ -1,2 +1,4 @@
 <!--pages/login/login.wxml-->
+<input class='username' placeholder="点击输入用户名" value = "{{idValue}}" bindinput="idInput" style="width:400rpx;height:50px;"></input>
+<input class='password' placeholder="点击输入密码" value = "{{pwdValue}}" bindinput="pwdInput" style="width:400rpx;height:50px;"></input>
 <button bindtap='login'>登录</button>

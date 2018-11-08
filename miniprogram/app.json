@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/instruID/instruID",
     "pages/EMQ/EMQ"
     
   ],

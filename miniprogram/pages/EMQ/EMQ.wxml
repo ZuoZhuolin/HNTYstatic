@@ -8,4 +8,5 @@
 <view class = "connectButton">
   <button bindtap='initSocket'>连接</button>
   <button bindtap='closeLink'>断开</button>
+  <button bindtap='reChoose'>重新选择仪器</button>
 </view>

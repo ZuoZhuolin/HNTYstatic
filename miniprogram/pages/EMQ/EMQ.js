@@ -1,5 +1,6 @@
 // pages/EMQ/EMQ.js
 var stompClient = {};
+var app = getApp();
 Page({
 
   /**
@@ -108,7 +109,7 @@ Page({
     var stompClient = Stomp.over(ws);
     var that = this;
     stompClient.connect({}, function (sessionId) {
-      stompClient.subscribe('/measure/QB91G201809003', function (res) {
+      stompClient.subscribe('/measure/'+app.globalData.showId, function (res) {
         console.log(res);
         var state = JSON.parse(res.body);
         var measures = state.measures;        
@@ -135,6 +136,12 @@ Page({
       success: function (res) {
         console.log("websocket连接已关闭");
       }
+    })
+  },
+  reChoose: function(){
+    this.closeLink()
+    wx.navigateBack({
+      delta: 1
     })
   }
 })
