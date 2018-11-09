@@ -1,1 +1,44 @@
 /* pages/login/login.wxss */
+.container{
+  width:100%
+}
+.company_logo {
+  
+  width: 500rpx;
+  height: 300rpx;
+  margin-top: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+.inputInfo{
+  margin-top: 30%;
+  
+}
+.username{
+  border:  2px solid gray;
+  border-radius: 10px;
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+  margin-top: 15px;
+}
+
+.password{
+  border:  2px solid gray;
+  border-radius: 10px;
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+}
+
+.rmbPwd{
+  display: flex;
+  flex-direction: row;
+  margin-left: 100rpx;
+}
+
+.loginButton{
+  border-radius: 40px;
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+}

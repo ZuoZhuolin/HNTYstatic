@@ -1,12 +1,11 @@
 <!--pages/EMQ/EMQ.wxml-->
 <view class = "static">
+  <view>{{showId}}</view>
   <view wx:for = "{{index}}" >
     {{item}}
   </view>
 </view>
 
 <view class = "connectButton">
-  <button bindtap='initSocket'>连接</button>
-  <button bindtap='closeLink'>断开</button>
   <button bindtap='reChoose'>重新选择仪器</button>
 </view>

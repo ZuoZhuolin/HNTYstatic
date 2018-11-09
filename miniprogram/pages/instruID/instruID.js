@@ -14,6 +14,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    app.globalData.instruList = []
     for (var i = 0; i < app.globalData.deviceList.length; i++) {
       app.globalData.instruList.push(app.globalData.deviceList[i].id)
     }
@@ -77,7 +78,7 @@ Page({
     console.log(e.currentTarget.id)
     app.globalData.showId = this.data.arr[index]
     console.log(app.globalData.showId)
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../EMQ/EMQ',
     })
   },
@@ -107,6 +108,13 @@ Page({
       },
       complete: (res) => {
       }
+    })
+  },
+
+  backmenu: function(){
+    wx.clearStorage()
+    wx.reLaunch({
+      url: '../login/login',
     })
   }
 })

@@ -7,7 +7,8 @@ Page({
    */
   data: {
     username:null,
-    password:null
+    password:null,
+    remember:null,
   },
 
   /**
@@ -16,9 +17,21 @@ Page({
   onLoad: function (options) {
     var that = this
     wx.getStorage({
+      key: 'remember',
+      success (res) {
+        //console.log(res)
+        app.globalData.rmbornot = res,
+        that.setData({
+          remember: app.globalData.rmbornot
+        })
+        
+      }
+    })
+     
+    wx.getStorage({
       key: 'username',
       success: function(res) {
-        console.log(res)       
+        //console.log(res)       
         that.setData({
           idValue : res.data,
           username: res.data
@@ -28,13 +41,14 @@ Page({
     wx.getStorage({
       key: 'password',
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         that.setData({
           pwdValue: res.data,
           password: res.data
         })
       },
     })
+    
   },
 
   /**
@@ -98,33 +112,79 @@ Page({
   },
   login:function(){
     var that = this
-    wx.request({
-      url: 'http://47.92.33.38:8080/hnty/cloud/app/android/login?username='+ this.data.username + '&password='+ this.data.password + '&mac=C4%3A07%3A2F%3A52%3A3F%3A7A',
-      method: 'GET',
-      success: function (res) {
-        if (res.data.success) {
-          console.log(res.data.deviceList)          
-          wx.setStorage({
-            key: 'username',
-            data: that.data.username,
-          })
-          wx.setStorage({
-            key: 'password',
-            data: that.data.password,
-          })
-          app.globalData.deviceList = res.data.deviceList
-          wx.redirectTo({
-            url: '../instruID/instruID',
-          })
-        } else {        
-          console.log(that.data.username)
-          wx.showToast({
-            title: '账户或密码错误',
-            icon: 'none',
-            duration: 2000
-          })
+    if(app.globalData.rmbornot == true){
+      wx.request({
+        url: 'http://47.92.33.38:8080/hnty/cloud/app/android/login?username=' + this.data.username + '&password=' + this.data.password + '&mac=C4%3A07%3A2F%3A52%3A3F%3A7A',
+        method: 'GET',
+        success: function (res) {
+          if (res.data.success) {
+            console.log(res.data.deviceList)
+            wx.setStorage({
+              key: 'username',
+              data: that.data.username,
+            })
+            wx.setStorage({
+              key: 'password',
+              data: that.data.password,
+            })
+            wx.setStorage({
+              key: 'remember',
+              data: 'true',
+            })
+            app.globalData.deviceList = res.data.deviceList
+            wx.redirectTo({
+              url: '../instruID/instruID',
+            })
+          } else {
+            wx.showToast({
+              title: '账户或密码错误',
+              icon: 'none',
+              duration: 2000
+            })
+          }
         }
-      }
+      })
+    }else{
+      wx.request({
+        url: 'http://47.92.33.38:8080/hnty/cloud/app/android/login?username=' + this.data.username + '&password=' + this.data.password + '&mac=C4%3A07%3A2F%3A52%3A3F%3A7A',
+        method: 'GET',
+        success: function (res) {
+          if (res.data.success) {
+            console.log(res.data.deviceList)
+            wx.clearStorage()
+            wx.setStorage({
+              key: 'remember',
+              data: 'fasle',
+            })
+            app.globalData.deviceList = res.data.deviceList
+            wx.redirectTo({
+              url: '../instruID/instruID',
+            })
+          } else {
+            wx.showToast({
+              title: '账户或密码错误',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        }
+      })
+    }
+  },
+
+  rmbpwd: function(){
+    app.globalData.rmbornot = true
+    this.setData({
+      remember: app.globalData.rmbornot
     })
+    //console.log(app.globalData.rmbornot)
+  },
+
+  cancleRmb:function(){
+    app.globalData.rmbornot = false
+    this.setData({
+      remember: app.globalData.rmbornot
+    })
+    //console.log(app.globalData.rmbornot)
   }
 })

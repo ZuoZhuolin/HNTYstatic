@@ -8,13 +8,70 @@ Page({
    */
   data: {
     index: [],
+    showId:null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      showId:app.globalData.showId
+    })
+    var socketOpen = false
 
+    function sendSocketMessage(msg) {
+      console.log('send msg:')
+      console.log(msg);
+      if (socketOpen) {
+        wx.sendSocketMessage({
+          data: msg
+        })
+      } else {
+        socketMsgQueue.push(msg)
+      }
+    }
+
+
+    var ws = {
+      send: sendSocketMessage
+    }
+
+    wx.connectSocket({
+      url: 'ws://47.92.33.38:8080/hnty/WebSocketServer'
+    })
+
+    wx.onSocketOpen(function (res) {
+      socketOpen = true
+      ws.onopen()
+    })
+
+    wx.onSocketMessage(function (res) {
+      ws.onmessage(res)
+    })
+
+    var Stomp = require('../../utils/stomp.js').Stomp;
+    Stomp.setInterval = function () { }
+    Stomp.clearInterval = function () { }
+    var stompClient = Stomp.over(ws);
+    var that = this;
+    stompClient.connect({}, function (sessionId) {
+      stompClient.subscribe('/measure/' + app.globalData.showId, function (res) {
+        console.log(res);
+        var state = JSON.parse(res.body);
+        var measures = state.measures;
+        for (var i = 0; i < measures.length; i++) {
+          var info = measures[i].label + ": " + measures[i].value + measures[i].unit + " " + measures[i].key + "\n"
+          var track = 'index[' + i + ']'
+          console.log(info)
+          if (measures[i].key.substr(0, 1) != "V" && measures[i].key.substr(0, 1) != " ") {
+            that.setData({
+              [track]: info,
+            })
+          }
+        }
+      });
+    })
   },
 
   /**
@@ -66,67 +123,6 @@ Page({
 
   },
 
-  /**
-   * WebSocket相关 + STOMP
-   */
-  initSocket: function () {
-
-    var socketOpen = false
-
-    function sendSocketMessage(msg) {
-      console.log('send msg:')
-      console.log(msg);
-      if (socketOpen) {
-        wx.sendSocketMessage({
-          data: msg
-        })
-      } else {
-        socketMsgQueue.push(msg)
-      }
-    }
-
-
-    var ws = {
-      send: sendSocketMessage
-    }
-
-    wx.connectSocket({
-      url: 'ws://47.92.33.38:8080/hnty/WebSocketServer'
-    })
-
-    wx.onSocketOpen(function (res) {
-      socketOpen = true
-      ws.onopen()
-    })
-
-    wx.onSocketMessage(function (res) {
-      ws.onmessage(res)
-    })
-
-    var Stomp = require('../../utils/stomp.js').Stomp;
-    Stomp.setInterval = function () { }
-    Stomp.clearInterval = function () { }
-    var stompClient = Stomp.over(ws);
-    var that = this;
-    stompClient.connect({}, function (sessionId) {
-      stompClient.subscribe('/measure/'+app.globalData.showId, function (res) {
-        console.log(res);
-        var state = JSON.parse(res.body);
-        var measures = state.measures;        
-        for(var i = 0; i < measures.length; i++){
-          var info = measures[i].label + ": " + measures[i].value + measures[i].unit + " " + measures[i].key + "\n"
-          var track = 'index['+i+']'
-          console.log(info)
-          if (measures[i].key.substr(0, 1) != "V" && measures[i].key.substr(0,1) != " ") {
-            that.setData({
-              [track]: info,
-            })
-          }
-        }  
-      });
-    })
-
-  },
 
   /**
    * 断开WebSocket连接
@@ -140,8 +136,8 @@ Page({
   },
   reChoose: function(){
     this.closeLink()
-    wx.navigateBack({
-      delta: 1
+    wx.redirectTo({
+      url:'../instruID/instruID'
     })
   }
 })

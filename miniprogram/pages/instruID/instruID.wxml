@@ -3,3 +3,4 @@
     <button>{{item}}</button>
 </view>
 <button bindtap='scanId'>扫码查看现场仪器</button>
+<button class = "backmenu" bindtap = 'backmenu' type='warn'>注销用户</button>

@@ -14,6 +14,7 @@ App({
       deviceList:null,
       instruList:[],
       showId:null,
+      rmbornot:false,
     }
   }
 })
