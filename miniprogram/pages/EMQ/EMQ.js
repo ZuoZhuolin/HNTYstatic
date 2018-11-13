@@ -61,7 +61,7 @@ Page({
         var state = JSON.parse(res.body);
         var measures = state.measures;
         for (var i = 0; i < measures.length; i++) {
-          var info = measures[i].label + ": " + measures[i].value + measures[i].unit + " " + measures[i].key + "\n"
+          var info = measures[i].label + "(" + measures[i].key + ")" + ": " + measures[i].value + measures[i].unit + " " + "\n"
           var track = 'index[' + i + ']'
           console.log(info)
           if (measures[i].key.substr(0, 1) != "V" && measures[i].key.substr(0, 1) != " ") {

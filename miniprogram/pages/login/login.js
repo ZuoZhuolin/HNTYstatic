@@ -8,7 +8,7 @@ Page({
   data: {
     username:null,
     password:null,
-    remember:null,
+    rmb:null,
   },
 
   /**
@@ -16,22 +16,12 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    wx.getStorage({
-      key: 'remember',
-      success (res) {
-        //console.log(res)
-        app.globalData.rmbornot = res,
-        that.setData({
-          remember: app.globalData.rmbornot
-        })
-        
-      }
-    })
-     
+   
+
     wx.getStorage({
       key: 'username',
       success: function(res) {
-        //console.log(res)       
+        console.log(res)       
         that.setData({
           idValue : res.data,
           username: res.data
@@ -41,7 +31,7 @@ Page({
     wx.getStorage({
       key: 'password',
       success: function(res) {
-        //console.log(res)
+        console.log(res)
         that.setData({
           pwdValue: res.data,
           password: res.data
@@ -112,7 +102,8 @@ Page({
   },
   login:function(){
     var that = this
-    if(app.globalData.rmbornot == true){
+    
+    if (app.globalData.rmbornot == true) {
       wx.request({
         url: 'http://47.92.33.38:8080/hnty/cloud/app/android/login?username=' + this.data.username + '&password=' + this.data.password + '&mac=C4%3A07%3A2F%3A52%3A3F%3A7A',
         method: 'GET',
@@ -131,6 +122,9 @@ Page({
               key: 'remember',
               data: 'true',
             })
+            console.log(
+              "cheng gong"
+            )
             app.globalData.deviceList = res.data.deviceList
             wx.redirectTo({
               url: '../instruID/instruID',
@@ -144,7 +138,7 @@ Page({
           }
         }
       })
-    }else{
+    } else {
       wx.request({
         url: 'http://47.92.33.38:8080/hnty/cloud/app/android/login?username=' + this.data.username + '&password=' + this.data.password + '&mac=C4%3A07%3A2F%3A52%3A3F%3A7A',
         method: 'GET',
@@ -156,6 +150,7 @@ Page({
               key: 'remember',
               data: 'fasle',
             })
+            console.log("shibai")
             app.globalData.deviceList = res.data.deviceList
             wx.redirectTo({
               url: '../instruID/instruID',
@@ -169,22 +164,22 @@ Page({
           }
         }
       })
-    }
-  },
+  }
+},
 
   rmbpwd: function(){
     app.globalData.rmbornot = true
     this.setData({
-      remember: app.globalData.rmbornot
+      rmb: app.globalData.rmbornot
     })
-    //console.log(app.globalData.rmbornot)
+    console.log(app.globalData.rmbornot)
   },
 
   cancleRmb:function(){
     app.globalData.rmbornot = false
     this.setData({
-      remember: app.globalData.rmbornot
+      rmb: app.globalData.rmbornot
     })
-    //console.log(app.globalData.rmbornot)
+    console.log(app.globalData.rmbornot)
   }
 })

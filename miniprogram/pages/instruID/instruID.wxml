@@ -1,6 +1,7 @@
 <!--pages/instruID/instruID.wxml-->
-<view wx:for="{{arr}}" bindtap='chooseInstru' id="{{index}}" wx:key="*this" >
-    <button>{{item}}</button>
+
+<view class = "instruList" wx:for="{{arr}}" bindtap='chooseInstru' id="{{index}}" wx:key="*this" >
+    <button class = "instru">{{item}}</button>
 </view>
-<button bindtap='scanId'>扫码查看现场仪器</button>
+<button  class = "scanInstru" bindtap='scanId'>扫码查看现场仪器</button>
 <button class = "backmenu" bindtap = 'backmenu' type='warn'>注销用户</button>

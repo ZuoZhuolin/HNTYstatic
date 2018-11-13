@@ -1,11 +1,11 @@
 <!--pages/EMQ/EMQ.wxml-->
 <view class = "static">
-  <view>{{showId}}</view>
-  <view wx:for = "{{index}}" >
+  <view class = "instruId">{{showId}}</view>
+  <view class = "detail" wx:for = "{{index}}" >
     {{item}}
   </view>
 </view>
 
 <view class = "connectButton">
-  <button bindtap='reChoose'>重新选择仪器</button>
+  <button bindtap='reChoose' type='warn'>重新选择仪器</button>
 </view>

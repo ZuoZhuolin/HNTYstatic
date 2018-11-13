@@ -9,12 +9,13 @@
 </view>
 
 <view class='rmbPwd'>
-  <view wx:if="{{!remember}}" bindtap = 'rmbpwd'>
-    <image src='../../images/notRemember.png' style="width: 28px; height: 28px;"></image>
-  </view>
-  <view wx:if="{{remember}}" bindtap = 'cancleRmb'>
+  <view wx:if="{{rmb}}" bindtap = 'cancleRmb'>
     <image src='../../images/remember.png' style="width:28px; height:28px"></image>
   </view>
+  <view wx:if="{{!rmb}}" bindtap = 'rmbpwd'>
+    <image src='../../images/notRemember.png' style="width: 28px; height: 28px;"></image>
+  </view>
+  
   <view class='jizhu'>记住密码</view>
 </view>
 

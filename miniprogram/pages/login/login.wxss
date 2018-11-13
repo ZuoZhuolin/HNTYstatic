@@ -1,4 +1,7 @@
 /* pages/login/login.wxss */
+page{
+  background-color: aliceblue;
+}
 .container{
   width:100%
 }
@@ -17,16 +20,14 @@
   
 }
 .username{
-  border:  2px solid gray;
-  border-radius: 10px;
+  
   margin-left: 100rpx;
   margin-right: 100rpx;
   margin-top: 15px;
 }
 
 .password{
-  border:  2px solid gray;
-  border-radius: 10px;
+ 
   margin-left: 100rpx;
   margin-right: 100rpx;
 }

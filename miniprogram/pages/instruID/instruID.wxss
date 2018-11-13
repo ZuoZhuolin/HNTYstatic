@@ -1,1 +1,22 @@
 /* pages/instruID/instruID.wxss */
+.instru{
+  width: 700rpx;
+  margin-top: 30rpx;
+  background-color: aliceblue;
+}
+
+.scanInstru{
+  width: 700rpx;
+  margin-top: 30rpx;
+  background-color: #FFCC00;
+}
+
+.backmenu{
+  width: 700rpx;
+  margin-top: 30rpx;
+  background-color: #FFCC00;
+}
+
+page{
+  background-color: aliceblue;
+}
